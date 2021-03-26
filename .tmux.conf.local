@@ -290,5 +290,15 @@ tmux_conf_copy_to_os_clipboard=false
 
 # move status line to top
 #set -g status-position top
+
+# reset
 bind -n S-left  prev
 bind -n S-right next
+
+bind -r ^k resizep -U 5
+bind -r ^j resizep -D 5
+bind -r ^h resizep -L 5
+bind -r ^l resizep -R 5
+
+# mouse
+set -g mouse on
