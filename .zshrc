@@ -14,4 +14,4 @@ export PATH=~/.npm-global/bin:$PATH
 
 alias t=tmux
 alias a="tmux a"
-alias tm="teamocil mars --here"
+alias tm="teamocil deft --here"
