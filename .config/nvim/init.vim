@@ -291,7 +291,7 @@ autocmd FilterWritePre  * :call TrimWhiteSpace()
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
 " MultiCursor
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " MultiCursor is conflicting with deoplete
 func! Multiple_cursors_before()
