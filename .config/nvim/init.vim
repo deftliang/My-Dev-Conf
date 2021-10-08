@@ -5,7 +5,6 @@ nnoremap tj  :tabnext<CR>
 nnoremap tk  :tabprev<CR>
 nnoremap tc  :tabclose<CR>
 let mapleader =','
-nnoremap <C-a> ggVG
 
 "Vundle
 set nocompatible              " be iMproved, required
@@ -14,29 +13,27 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 call plug#begin('~/.vim/plugged')
 
-" vue support
-" Plug 'posva/vim-vue'
-
-" coc - prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  :Prettier<CR>
-
 " Color Schemes
 Plug 'flazz/vim-colorschemes'
 Plug 'joshdick/onedark.vim'
-
-" set color
-if (has("nvim"))
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-if (has("termguicolors"))
-  set termguicolors
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
 endif
 
 " Icons
 Plug 'ryanoasis/vim-devicons', {'commit': '58e57b6'}
-
 " Files + devicons
 function! Fzf_dev()
   let l:fzf_files_options = ' -m --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up --preview "bat --color always --style numbers {2..}"'
@@ -93,7 +90,6 @@ let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
-
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
 exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
@@ -116,7 +112,7 @@ au VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#
 autocmd VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
 highlight! link NERDTreeFlags NERDTreeDir
 
-" AutoCompleteRelated
+" " AutoCompleteRelated
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = [
   \ 'coc-snippets',
@@ -208,7 +204,6 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 nnoremap <c-p> :call Fzf_dev()<cr>
-" nnoremap <c-p> :FZF<cr>
 nnoremap <c-i> :Ag<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " Augmenting Ag command using fzf#vim#with_preview function
@@ -243,10 +238,10 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols = {}
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰ '
+let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
-let g:airline_theme = "onedark"
+let g:airline_theme = 'onedark'
 
 " DelemitMate
 Plug 'Raimondi/delimitMate'
@@ -275,7 +270,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components'
 
-
 " JSX
 let g:jsx_ext_required = 0
 let g:user_emmet_settings = {
@@ -299,6 +293,14 @@ autocmd BufWritePre     * :call TrimWhiteSpace()
 " MultiCursor
 Plug 'terryma/vim-multiple-cursors'
 
+" MultiCursor is conflicting with deoplete
+func! Multiple_cursors_before()
+    call deoplete#init#_disable()
+endfunc
+func! Multiple_cursors_after()
+    call deoplete#init#_enable()
+endfunc
+
 " Plugins for Ruby
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -306,9 +308,6 @@ Plug 'tpope/vim-rails'
 " Plugins for Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim'
-
-" GO
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -375,6 +374,3 @@ nnoremap <C-h> <C-W><C-H>
 
 " Swp file handling
 set backupdir=~/.vim/backup//
-
-" format py
-" let g:formatter_yapf_style = 'pep8'
