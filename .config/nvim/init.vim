@@ -14,8 +14,8 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 call plug#begin('~/.vim/plugged')
 
-"vue support
-Plug 'posva/vim-vue'
+" vue support
+" Plug 'posva/vim-vue'
 
 " coc - prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -377,4 +377,4 @@ nnoremap <C-h> <C-W><C-H>
 set backupdir=~/.vim/backup//
 
 " format py
-let g:formatter_yapf_style = 'pep8'
+" let g:formatter_yapf_style = 'pep8'
