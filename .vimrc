@@ -6,6 +6,8 @@ set backspace=2
 " Maps space to colon, time saver
 nmap <space> :
 
+imap jk <Esc>
+
 " Indentation
 set tabstop=2
 set expandtab
