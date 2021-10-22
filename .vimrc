@@ -1,4 +1,4 @@
-# vimrc default settings
+
 
 " Make backspace work
 set backspace=2
