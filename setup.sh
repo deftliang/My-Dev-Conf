@@ -29,6 +29,8 @@ sudo easy_install3 pip
 
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh
+# Rust 换源
+cat rs-config >> ~/.cargo/config
 
 
 # Install Node.js
